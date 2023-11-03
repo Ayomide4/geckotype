@@ -38,14 +38,30 @@ p {
   color: #081c15;
 }
 
-input {
+.text-box {
   border: none;
   background-color: transparent;
   color: transparent;
+  user-select: none;
+}
+
+.hidden {
+  visibility: hidden;
 }
 
 input:focus {
   outline: none;
+  user-select: none;
+}
+
+.word-count {
+  position: absolute;
+  top: -20%;
+  left: 0%;
+  transform: translate(0%, 0%);
+  color: #081c15;
+  font-weight: 600;
+  user-select: none;
 }
 
 span {

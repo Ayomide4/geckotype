@@ -1,12 +1,17 @@
 import React from "react";
 import { commonWords } from "./CommonWords";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
+
+//TODO: add a restart game button
+//TODO: add a timer
+//TODO: add a word count
 
 export const TypingGame = () => {
   const [input, setInput] = useState("");
   const [displayPhrase, setDisplayPhrase] = useState([]);
   const [isFocused, setIsFocused] = useState(false);
   const element = document.querySelectorAll("span");
+  const [count, setCount] = useState(0);
 
   const test2 = displayPhrase.map((char, index) => {
     return <span key={index}>{char}</span>;
@@ -25,7 +30,6 @@ export const TypingGame = () => {
 
       i++;
     }
-    console.log(arr);
     setDisplayPhrase(arr);
   };
 
@@ -36,7 +40,6 @@ export const TypingGame = () => {
 
     element.forEach((charSpan, index) => {
       const currentChar = arrayValue[index];
-      console.log(currentChar, charSpan.innerText);
       if (currentChar == null) {
         charSpan.classList.remove("correct");
         charSpan.classList.remove("incorrect");
@@ -56,20 +59,44 @@ export const TypingGame = () => {
     setIsFocused(true);
   };
 
+  // focus input on keypress
+  if (!isFocused) {
+    document.onkeydown = function (e) {
+      e = e || window.event;
+      focusInput();
+    };
+  } else {
+  }
+
+  //FIXME: add a restart game button
+  //restart game on shift + enter
+  // document.onkeydown = function (e) {
+  //   e = e || window.event;
+  //   if (e.shiftKey && e.code == "Enter") {
+  //     window.location.reload();
+  //   }
+  // };
+
   useEffect(() => {
     generatePhrase();
-  }, []);
+  }, [count]);
 
   return (
     <div>
       <h1>geckotype</h1>
       <div className="game-container ">
+        {isFocused && <p className="word-count">0/30</p>}
         {isFocused ? <></> : <p>Click here or start typing to focus</p>}
         <div
           className={`${isFocused ? "quote" : "quote unfocused"}`}
           onClick={focusInput}
         >
-          <input value={input} onChange={(e) => handleChange(e)} autoFocus />
+          <input
+            className={`${isFocused ? "text-box" : "hidden"}`}
+            value={input}
+            onChange={(e) => handleChange(e)}
+            autoFocus
+          />
           <div className="quote">{test2}</div>
         </div>
       </div>

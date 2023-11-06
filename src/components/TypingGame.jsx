@@ -4,8 +4,8 @@ import { useState, useEffect, useCallback } from "react";
 
 //TODO: add a restart game button
 //TODO: add a timer
-//TODO: add a word count
-
+//TODO: add a wpm
+//  - wpm = words / minutes
 export const TypingGame = () => {
   const [input, setInput] = useState("");
   const [displayPhrase, setDisplayPhrase] = useState([]);
@@ -71,8 +71,7 @@ export const TypingGame = () => {
   //FIXME: add a restart game button
   //restart game on shift + enter
   // document.onkeydown = function (e) {
-  //   e = e || window.event;
-  //   if (e.shiftKey && e.code == "Enter") {
+  //   e = e || window.event; if (e.shiftKey && e.code == "Enter") {
   //     window.location.reload();
   //   }
   // };
@@ -86,7 +85,11 @@ export const TypingGame = () => {
       <h1>geckotype</h1>
       <div className="game-container ">
         {isFocused && <p className="word-count">0/30</p>}
-        {isFocused ? <></> : <p>Click here or start typing to focus</p>}
+        {isFocused ? (
+          <></>
+        ) : (
+          <p className="focus-text">Click here or start typing to focus</p>
+        )}
         <div
           className={`${isFocused ? "quote" : "quote unfocused"}`}
           onClick={focusInput}

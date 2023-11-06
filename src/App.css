@@ -1,15 +1,15 @@
 body {
   margin: 0;
   padding: 0;
-  background-color: #74c69d;
-  font-family: "Roboto", sans-serif;
+  background-color: #d8f3dc;
+  font-family: "Roboto Mono", sans-serif;
 }
 
 h1 {
   position: absolute;
   top: 5%;
   left: 10%;
-  color: #081c15;
+  color: #1a4231;
   font-weight: 600;
   user-select: none;
   margin: 0;
@@ -29,13 +29,13 @@ h1 {
   cursor: pointer;
 }
 
-p {
+.focus-text {
   position: absolute;
   top: 30%;
   left: 50%;
   transform: translate(-50%, -50%);
   font-size: 1.5rem;
-  color: #081c15;
+  color: #1a4231;
 }
 
 .text-box {
@@ -59,7 +59,8 @@ input:focus {
   top: -20%;
   left: 0%;
   transform: translate(0%, 0%);
-  color: #081c15;
+  color: #75c79e;
+  font-size: 1.5rem;
   font-weight: 600;
   user-select: none;
 }
@@ -72,7 +73,7 @@ span {
 }
 
 .correct {
-  color: #d8f3dc;
+  color: #75c79e;
 }
 
 .incorrect {

@@ -1,19 +1,14 @@
 import React from "react";
 import { commonWords } from "./CommonWords";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 
-//TODO: add a restart game button
-//TODO: add a timer
-//TODO: add a wpm
-//  - wpm = words / minutes
-export const TypingGame = () => {
-  const [input, setInput] = useState("");
+export const TypingGame = ({ input, setInput, spanElements }) => {
   const [displayPhrase, setDisplayPhrase] = useState([]);
   const [isFocused, setIsFocused] = useState(false);
-  const element = document.querySelectorAll("span");
-  const [count, setCount] = useState(0);
+  const [wordCount] = useState(0);
 
-  const test2 = displayPhrase.map((char, index) => {
+  //TODO: use cb for generate phrase
+  const quote = displayPhrase.map((char, index) => {
     return <span key={index}>{char}</span>;
   });
 
@@ -33,12 +28,13 @@ export const TypingGame = () => {
     setDisplayPhrase(arr);
   };
 
+  //when first character is typed, start timer
+
   const handleChange = (e) => {
-    const value = e.target.value;
-    const arrayValue = value.split("");
+    const arrayValue = e.target.value.split("");
     setInput(e.target.value);
 
-    element.forEach((charSpan, index) => {
+    spanElements.forEach((charSpan, index) => {
       const currentChar = arrayValue[index];
       if (currentChar == null) {
         charSpan.classList.remove("correct");
@@ -65,26 +61,23 @@ export const TypingGame = () => {
       e = e || window.event;
       focusInput();
     };
-  } else {
   }
 
-  //FIXME: add a restart game button
-  //restart game on shift + enter
-  // document.onkeydown = function (e) {
-  //   e = e || window.event; if (e.shiftKey && e.code == "Enter") {
-  //     window.location.reload();
-  //   }
-  // };
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" && e.shiftKey) {
+      window.location.reload();
+    }
+  });
 
   useEffect(() => {
     generatePhrase();
-  }, [count]);
+  }, []);
 
   return (
     <div>
       <h1>geckotype</h1>
       <div className="game-container ">
-        {isFocused && <p className="word-count">0/30</p>}
+        {isFocused && <p className="word-count">{wordCount}/30</p>}
         {isFocused ? (
           <></>
         ) : (
@@ -100,7 +93,7 @@ export const TypingGame = () => {
             onChange={(e) => handleChange(e)}
             autoFocus
           />
-          <div className="quote">{test2}</div>
+          <div className="quote">{quote}</div>
         </div>
       </div>
     </div>

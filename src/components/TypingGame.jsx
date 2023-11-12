@@ -2,12 +2,12 @@ import React from "react";
 import { commonWords } from "./CommonWords";
 import { useState, useEffect } from "react";
 
-export const TypingGame = ({ input, setInput, spanElements }) => {
+export const TypingGame = ({ input, setInput }) => {
   const [displayPhrase, setDisplayPhrase] = useState([]);
   const [isFocused, setIsFocused] = useState(false);
   const [wordCount] = useState(0);
+  const spanElements = document.querySelectorAll("span");
 
-  //TODO: use cb for generate phrase
   const quote = displayPhrase.map((char, index) => {
     return <span key={index}>{char}</span>;
   });
@@ -27,8 +27,6 @@ export const TypingGame = ({ input, setInput, spanElements }) => {
     }
     setDisplayPhrase(arr);
   };
-
-  //when first character is typed, start timer
 
   const handleChange = (e) => {
     const arrayValue = e.target.value.split("");
@@ -51,8 +49,10 @@ export const TypingGame = ({ input, setInput, spanElements }) => {
 
   const focusInput = () => {
     const input = document.querySelector("input");
-    input.focus();
-    setIsFocused(true);
+    if (input !== null) {
+      input.focus();
+      setIsFocused(true);
+    }
   };
 
   // focus input on keypress

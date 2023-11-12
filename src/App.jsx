@@ -1,37 +1,24 @@
 import "./App.css";
 import { useState, useRef } from "react";
 import { TypingGame } from "./components/TypingGame";
+import { Timer } from "./components/Timer";
+import { Stats } from "./components/Stats";
 
 function App() {
   const [input, setInput] = useState("");
+  const wpm = useRef(0);
+  const [acc, setAcc] = useState(0);
+  const [finished, setFinished] = useState(false);
   const spanElements = document.querySelectorAll("span");
-
-  const timer = useRef(null);
-  const getTimerTime = (current) => {
-    return Math.floor((new Date() - current) / 1000);
-  };
-  let totalTime = useRef(0);
-
-  if (input.length === 1) {
-    const currentTime = new Date();
-    timer.current = setInterval(() => {
-      // console.log(getTimerTime(currentTime));
-      totalTime.current = getTimerTime(currentTime);
-    }, 1000);
-  }
-
   if (input.length === spanElements.length && spanElements.length !== 0) {
-    console.log("WPM: ", Math.floor(30 / (totalTime.current / 60)));
-    clearInterval(timer.current);
+    setFinished((prev) => !prev);
+    setInput("");
   }
-
   return (
     <>
-      <TypingGame
-        spanElements={spanElements}
-        input={input}
-        setInput={setInput}
-      />
+      {!finished && <TypingGame input={input} setInput={setInput} />}
+      {finished && <Stats setFinished={setFinished} wpm={wpm} />}
+      <Timer spanElements={spanElements} input={input} wpm={wpm} />
     </>
   );
 }

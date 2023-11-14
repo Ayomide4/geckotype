@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 export const TypingGame = ({ input, setInput }) => {
   const [displayPhrase, setDisplayPhrase] = useState([]);
   const [isFocused, setIsFocused] = useState(false);
-  const [wordCount] = useState(0);
+  const [wordCount, setWordCount] = useState(0);
   const spanElements = document.querySelectorAll("span");
 
   const quote = displayPhrase.map((char, index) => {
@@ -39,13 +39,28 @@ export const TypingGame = ({ input, setInput }) => {
         charSpan.classList.remove("incorrect");
       } else if (currentChar === charSpan.innerText) {
         charSpan.classList.add("correct");
+        charSpan.classList.add("cursor");
         charSpan.classList.remove("incorrect");
       } else {
+        charSpan.classList.remove("cursor");
         charSpan.classList.add("incorrect");
         charSpan.classList.remove("correct");
       }
     });
   };
+
+  // count words
+  useEffect(() => {
+    const arrayValue = input.split("");
+    const lastChar = arrayValue[arrayValue.length - 1];
+    if (
+      lastChar === " " &&
+      lastChar === spanElements[arrayValue.length - 1].innerText
+    ) {
+      setWordCount((prev) => prev + 1);
+      setInput("");
+    }
+  }, [input]);
 
   const focusInput = () => {
     const input = document.querySelector("input");

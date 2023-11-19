@@ -5,14 +5,26 @@ body {
   font-family: "Roboto Mono", sans-serif;
 }
 
-h1 {
+.title {
+  display: flex;
+  align-items: center;
   position: absolute;
   top: 5%;
   left: 10%;
+}
+
+.icon {
+  width: 1.75rem;
+  margin-right: 0.5rem;
+  height: 1.75rem;
+}
+
+h1 {
   color: #1a4231;
   font-weight: 600;
   user-select: none;
   margin: 0;
+  font-size: 2.5rem;
 }
 
 .game-container {
@@ -89,13 +101,21 @@ span {
 }
 
 .cursor {
-  height: 1.5rem;
+  font-size: 1.5rem;
+  animation-name: caretFlashSmooth;
+  opacity: 1;
+  display: block;
+  top: 3.6px;
+  left: 5px;
 }
 
 @keyframes cursor-blink {
   0% {
     opacity: 0;
   }
+}
+.test {
+  border-left: 1px solid black;
 }
 
 .cursor::before {
@@ -105,4 +125,10 @@ span {
   background: #000;
   display: inline-block;
   animation: cursor-blink 1s steps(2) infinite;
+}
+
+.arrow {
+  cursor: pointer;
+  width: 1.5rem;
+  height: 1.5rem;
 }

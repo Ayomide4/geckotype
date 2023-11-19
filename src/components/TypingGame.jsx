@@ -7,8 +7,12 @@ export default function TypingGame() {
   const [input, setInput] = useState("");
   const wpm = useRef(0);
   const [finished, setFinished] = useState(false);
-  const [numIncorrect, setNumIncorrect] = useState(0);
+  const totalTyped = useRef(0);
+  const numCorrect = useRef(0);
+  const numIncorrect = useRef(0);
+  let totalTime = useRef(0);
   const spanElements = document.querySelectorAll("span");
+  const totalChars = spanElements.length;
 
   if (input.length === spanElements.length && spanElements.length !== 0) {
     setFinished((prev) => !prev);
@@ -20,17 +24,22 @@ export default function TypingGame() {
         <Typing
           input={input}
           setInput={setInput}
-          setNumIncorrect={setNumIncorrect}
+          numCorrect={numCorrect}
+          totalTyped={totalTyped}
+          numIncorrect={numIncorrect}
         />
       )}
       {finished && (
         <Stats
           setFinished={setFinished}
-          wpm={wpm}
+          numCorrect={numCorrect}
+          totalTyped={totalTyped}
           numIncorrect={numIncorrect}
+          totalTime={totalTime}
+          totalChars={totalChars}
         />
       )}
-      <Timer spanElements={spanElements} input={input} wpm={wpm} />
+      <Timer spanElements={spanElements} input={input} totalTime={totalTime} />
     </>
   );
 }

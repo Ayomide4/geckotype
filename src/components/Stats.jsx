@@ -1,16 +1,35 @@
 import { IoIosArrowForward } from "react-icons/io";
 
-export const Stats = ({ setFinished, wpm, numIncorrect }) => {
+export const Stats = ({
+  setFinished,
+  numCorrect,
+  numIncorrect,
+  totalChars,
+  totalTime,
+}) => {
   const handleRestart = () => {
     setFinished(false);
   };
 
-  console.log("num incorrect", numIncorrect);
+  let correctWpm = Math.floor(
+    numCorrect.current / 5 / (totalTime.current / 60),
+  );
+  let rawWpm = Math.floor(
+    (numCorrect.current + numIncorrect.current) / 5 / (totalTime.current / 60),
+  );
 
   return (
     <div className="stats-container">
-      <h2 className="wpm">WPM: {wpm.current}</h2>
-      <h2 className="acc">Accuracy: {30 / numIncorrect} </h2>
+      <h2 className="wpm">WPM: {correctWpm}</h2>
+      <h2 className="acc">
+        Accuracy: {Math.floor((numCorrect.current / totalChars) * 100)}%
+      </h2>
+      <h2> Raw: {rawWpm}</h2>
+      <h2>
+        Characters {numCorrect.current}/{numIncorrect.current}
+      </h2>
+      <h2> Total Time {totalTime.current}s</h2>
+
       <IoIosArrowForward className="arrow" onClick={handleRestart} />
     </div>
   );

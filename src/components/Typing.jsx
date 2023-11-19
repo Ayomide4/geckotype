@@ -1,11 +1,17 @@
 import React from "react";
-import { commonWords } from "./CommonWords";
+import { easyWords } from "./CommonWords";
 import { useState, useEffect, useRef } from "react";
 //TODO: fix cursor blinking css on current char
 //TODO: look at monkeytype to figure out stuff
 //refactor
 
-export const Typing = ({ input, setInput, setNumIncorrect }) => {
+export const Typing = ({
+  input,
+  setInput,
+  numCorrect,
+  totalTyped,
+  numIncorrect,
+}) => {
   const [displayPhrase, setDisplayPhrase] = useState([]);
   const [isFocused, setIsFocused] = useState(false);
   const [wordCount, setWordCount] = useState(0);
@@ -21,8 +27,8 @@ export const Typing = ({ input, setInput, setNumIncorrect }) => {
     let i = 0;
 
     while (i < 30) {
-      const randomIndex = Math.floor(Math.random() * commonWords.length);
-      const randomWord = commonWords[randomIndex];
+      const randomIndex = Math.floor(Math.random() * easyWords.length);
+      const randomWord = easyWords[randomIndex];
       const word = randomWord.split("");
       word.push(" ");
       arr = [...arr, ...word];
@@ -69,6 +75,19 @@ export const Typing = ({ input, setInput, setNumIncorrect }) => {
       if (wordList[wordCount] === word) {
         setWordCount((prev) => prev + 1);
       }
+    }
+
+    // count incorrect
+    if (
+      lastChar &&
+      lastChar !== spanElements[arrayValue.length - 1].innerText
+    ) {
+      numIncorrect.current += 1;
+    } else if (
+      lastChar &&
+      lastChar === spanElements[arrayValue.length - 1].innerText
+    ) {
+      numCorrect.current += 1;
     }
   }, [input]);
 

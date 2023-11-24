@@ -1,7 +1,9 @@
 import { useState, useRef } from "react";
 import { Typing } from "./Typing";
+import { IoPersonOutline } from "react-icons/io5";
 import { Timer } from "./Timer";
 import { Stats } from "./Stats";
+import icon from "../assets/icon.svg";
 
 export default function TypingGame() {
   const [input, setInput] = useState("");
@@ -20,6 +22,9 @@ export default function TypingGame() {
   }
   return (
     <>
+      <div className="title">
+        <h1>geckotype</h1>
+      </div>
       {!finished && (
         <Typing
           input={input}
@@ -40,6 +45,7 @@ export default function TypingGame() {
         />
       )}
       <Timer spanElements={spanElements} input={input} totalTime={totalTime} />
+      <IoPersonOutline className="profile-icon" />
     </>
   );
 }

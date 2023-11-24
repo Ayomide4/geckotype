@@ -26,7 +26,7 @@ export const Typing = ({
     let arr = [];
     let i = 0;
 
-    while (i < 30) {
+    while (i < 50) {
       const randomIndex = Math.floor(Math.random() * easyWords.length);
       const randomWord = easyWords[randomIndex];
       const word = randomWord.split("");
@@ -119,9 +119,6 @@ export const Typing = ({
 
   return (
     <div>
-      <div className="title">
-        <h1>geckotype</h1>
-      </div>
       <div className="game-container ">
         {isFocused && <p className="word-count">{wordCount}/30</p>}
         {isFocused ? (

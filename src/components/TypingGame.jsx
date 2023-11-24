@@ -1,12 +1,14 @@
 import { useState, useRef } from "react";
+import React from "react";
 import { Typing } from "./Typing";
 import { IoPersonOutline } from "react-icons/io5";
 import { Timer } from "./Timer";
 import { Stats } from "./Stats";
-import icon from "../assets/icon.svg";
+import ModeSelect from "./ModeSelect";
 
 export default function TypingGame() {
   const [input, setInput] = useState("");
+  const [isFocused, setIsFocused] = useState(false);
   const wpm = useRef(0);
   const [finished, setFinished] = useState(false);
   const totalTyped = useRef(0);
@@ -22,6 +24,7 @@ export default function TypingGame() {
   }
   return (
     <>
+      <ModeSelect isFocused={isFocused} />
       <div className="title">
         <h1>geckotype</h1>
       </div>
@@ -32,6 +35,8 @@ export default function TypingGame() {
           numCorrect={numCorrect}
           totalTyped={totalTyped}
           numIncorrect={numIncorrect}
+          isFocused={isFocused}
+          setIsFocused={setIsFocused}
         />
       )}
       {finished && (

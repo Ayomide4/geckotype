@@ -13,6 +13,10 @@ body {
   font-family: "Roboto Mono", sans-serif;
 }
 
+p {
+  color: var(--text-color);
+}
+
 .title {
   display: flex;
   align-items: center;
@@ -64,6 +68,7 @@ h1 {
   background-color: transparent;
   color: transparent;
   user-select: none;
+  pointer-events: none;
 }
 
 .hidden {
@@ -148,5 +153,65 @@ span {
   right: 10%;
   width: 1.5rem;
   height: 1.5rem;
+  cursor: pointer;
+}
+
+.mode-container {
+  position: absolute;
+  height: 2.5rem;
+  left: 50%;
+  top: 20%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+  background-color: #95d5b2;
+}
+
+.spacer {
+  height: 1.25rem;
+  border-left: 3px solid black;
+  border-radius: 5px;
+}
+
+.mode-select {
+  opacity: 1;
+  transition: opacity 0.1s ease-in-out; /* Add a smooth transition on opacity */
+}
+
+.mode-select-focused {
+  opacity: 0;
+  transition: opacity 0.1s ease-in-out; /* Add a smooth transition on opacity */
+}
+
+.mode-item {
+  display: flex;
+  align-items: center;
+  margin: 0 0.5rem;
+  cursor: pointer;
+}
+
+.mode-options {
+  display: flex;
+  align-items: center;
+  margin: 0 0.5rem;
+}
+
+.mode-item > p {
+  margin-left: 0.5rem;
+  padding-top: 0.2rem;
+}
+
+.mode-item:hover * {
+  color: #fff;
+  cursor: pointer;
+}
+
+.refresh-icon {
+  position: absolute;
+  bottom: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   cursor: pointer;
 }

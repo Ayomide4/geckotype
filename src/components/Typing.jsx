@@ -1,4 +1,5 @@
 import React from "react";
+import { FaRedoAlt } from "react-icons/fa";
 import { easyWords } from "./CommonWords";
 import { useState, useEffect, useRef } from "react";
 //TODO: fix cursor blinking css on current char
@@ -10,10 +11,11 @@ export const Typing = ({
   setInput,
   numCorrect,
   totalTyped,
+  isFocused,
+  setIsFocused,
   numIncorrect,
 }) => {
   const [displayPhrase, setDisplayPhrase] = useState([]);
-  const [isFocused, setIsFocused] = useState(false);
   const [wordCount, setWordCount] = useState(0);
   const spanElements = document.querySelectorAll("span");
   const wordIndex = useRef(0);
@@ -131,7 +133,7 @@ export const Typing = ({
           onClick={focusInput}
         >
           <input
-            className={`${isFocused ? "text-box" : "hidden"}`}
+            className={`${isFocused ? "text-box " : "hidden "}`}
             value={input}
             onChange={(e) => handleChange(e)}
             autoFocus
@@ -139,6 +141,11 @@ export const Typing = ({
           <div className="quote">{quote}</div>
         </div>
       </div>
+      <FaRedoAlt
+        className="refresh-icon"
+        size={20}
+        onClick={() => window.location.reload()}
+      />
     </div>
   );
 };

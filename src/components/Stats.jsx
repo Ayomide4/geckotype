@@ -7,6 +7,7 @@ export const Stats = ({
   totalChars,
   totalTime,
 }) => {
+  //FIXME: accuracy is not correct
   const handleRestart = () => {
     setFinished(false);
   };

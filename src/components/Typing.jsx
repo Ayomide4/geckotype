@@ -2,9 +2,6 @@ import React from "react";
 import { FaRedoAlt } from "react-icons/fa";
 import { easyWords } from "./CommonWords";
 import { useState, useEffect, useRef } from "react";
-//TODO: fix cursor blinking css on current char
-//TODO: look at monkeytype to figure out stuff
-//refactor
 
 export const Typing = ({
   input,
@@ -13,6 +10,7 @@ export const Typing = ({
   totalTyped,
   isFocused,
   setIsFocused,
+  numWords,
   numIncorrect,
 }) => {
   const [displayPhrase, setDisplayPhrase] = useState([]);
@@ -28,7 +26,7 @@ export const Typing = ({
     let arr = [];
     let i = 0;
 
-    while (i < 50) {
+    while (i < numWords) {
       const randomIndex = Math.floor(Math.random() * easyWords.length);
       const randomWord = easyWords[randomIndex];
       const word = randomWord.split("");
@@ -66,6 +64,14 @@ export const Typing = ({
     const lastChar = arrayValue[arrayValue.length - 1];
     const wordList = displayPhrase.join("").split(" ");
 
+    arrayValue.forEach((char, index) => {
+      if (index === arrayValue.length - 1) {
+        spanElements[index].classList.add("caret");
+      } else {
+        spanElements[index].classList.remove("caret");
+      }
+    });
+
     if (
       lastChar === " " &&
       lastChar === spanElements[arrayValue.length - 1].innerText
@@ -85,11 +91,21 @@ export const Typing = ({
       lastChar !== spanElements[arrayValue.length - 1].innerText
     ) {
       numIncorrect.current += 1;
+      // spanElements[arrayValue.length - 1].classList.add("caret");
+      // if (spanElements[arrayValue.length - 2] !== undefined) {
+      //   spanElements[arrayValue.length - 2].classList.remove("caret");
+      // }
     } else if (
       lastChar &&
       lastChar === spanElements[arrayValue.length - 1].innerText
     ) {
+      // spanElements[arrayValue.length - 1].classList.add("caret");
+      // if (spanElements[arrayValue.length - 2] !== undefined) {
+      //   spanElements[arrayValue.length - 2].classList.remove("caret");
+      // }
       numCorrect.current += 1;
+      // } else if (lastChar === undefined && spanElements[arrayValue.length - 1]) {
+      //   spanElements[arrayValue.length - 1].classList.remove("caret");
     }
   }, [input]);
 
@@ -110,19 +126,31 @@ export const Typing = ({
   }
 
   document.addEventListener("keydown", (e) => {
+    //FIXME: this is a hacky way to refresh the page
     if (e.key === "Enter" && e.shiftKey) {
       window.location.reload();
+    }
+
+    if (e.key === "Backspace") {
+      const arrayValue = input.split("");
+      if (arrayValue.length > 0 && arrayValue[arrayValue.length - 1]) {
+        spanElements[arrayValue.length - 1].classList.remove("caret");
+      }
     }
   });
 
   useEffect(() => {
     generatePhrase();
-  }, []);
+  }, [numWords]);
 
   return (
     <div>
       <div className="game-container ">
-        {isFocused && <p className="word-count">{wordCount}/30</p>}
+        {isFocused && (
+          <p className="word-count">
+            {wordCount}/{numWords}
+          </p>
+        )}
         {isFocused ? (
           <></>
         ) : (

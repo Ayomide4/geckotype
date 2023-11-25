@@ -1,6 +1,11 @@
 import { CiClock1 } from "react-icons/ci";
 import { FaFont, FaQuoteLeft, FaAt, FaHashtag } from "react-icons/fa";
-export default function ModeSelect({ isFocused }) {
+export default function ModeSelect({ isFocused, setNumWords }) {
+  const selectNumWords = (e) => {
+    const numWords = e.target.innerText;
+    setNumWords(numWords);
+  };
+
   return (
     <div className={isFocused ? "mode-select-focused" : "mode-select"}>
       <div className="mode-container">
@@ -30,13 +35,13 @@ export default function ModeSelect({ isFocused }) {
         </div>
         <div className="spacer"></div>
         <div className="mode-options ">
-          <div className="mode-item">
+          <div className="mode-item" onClick={(e) => selectNumWords(e)}>
             <p>10</p>
           </div>
-          <div className="mode-item">
+          <div className="mode-item" onClick={(e) => selectNumWords(e)}>
             <p>25</p>
           </div>
-          <div className="mode-item">
+          <div className="mode-item" onClick={(e) => selectNumWords(e)}>
             <p>50</p>
           </div>
         </div>

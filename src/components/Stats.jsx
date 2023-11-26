@@ -1,33 +1,37 @@
 import { IoIosArrowForward } from "react-icons/io";
 
 export const Stats = ({
+  setInput,
   setFinished,
   numCorrect,
   numIncorrect,
   totalChars,
   totalTime,
+  setNumCorrect,
+  setNumIncorrect,
 }) => {
   //FIXME: accuracy is not correct
   const handleRestart = () => {
     setFinished(false);
+    setNumCorrect(0);
+    setNumIncorrect(0);
+    // setInput("");
   };
 
-  let correctWpm = Math.floor(
-    numCorrect.current / 5 / (totalTime.current / 60),
-  );
+  let correctWpm = Math.floor(numCorrect / 5 / (totalTime.current / 60));
   let rawWpm = Math.floor(
-    (numCorrect.current + numIncorrect.current) / 5 / (totalTime.current / 60),
+    (numCorrect + numIncorrect) / 5 / (totalTime.current / 60),
   );
 
   return (
     <div className="stats-container">
       <h2 className="wpm">WPM: {correctWpm}</h2>
       <h2 className="acc">
-        Accuracy: {Math.floor((numCorrect.current / totalChars) * 100)}%
+        Accuracy: {Math.floor((numCorrect / totalChars) * 100)}%
       </h2>
       <h2> Raw: {rawWpm}</h2>
       <h2>
-        Characters {numCorrect.current}/{numIncorrect.current}
+        Characters {numCorrect}/{numIncorrect}
       </h2>
       <h2> Total Time {totalTime.current}s</h2>
 

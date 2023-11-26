@@ -10,19 +10,22 @@ export default function TypingGame() {
   const [input, setInput] = useState("");
   const [numWords, setNumWords] = useState(50);
   const [isFocused, setIsFocused] = useState(false);
+  const [numCorrect, setNumCorrect] = useState(0);
+  const [numIncorrect, setNumIncorrect] = useState(0);
   const wpm = useRef(0);
   const [finished, setFinished] = useState(false);
   const totalTyped = useRef(0);
-  const numCorrect = useRef(0);
-  const numIncorrect = useRef(0);
   let totalTime = useRef(0);
   const spanElements = document.querySelectorAll("span");
-  const totalChars = spanElements.length;
+  const totalChars = spanElements.length - 1;
 
-  if (input.length === spanElements.length - 1 && spanElements.length !== 0) {
-    setFinished((prev) => !prev);
-    setInput("");
-  }
+  // if (input.length === spanElements.length - 1 && spanElements.length !== 0) {
+  //   setFinished((prev) => !prev);
+  //   setInput("");
+  // }
+
+  console.log(spanElements.length, totalChars, input.length);
+  console.log("correct", numCorrect, "incorrect", numIncorrect);
   return (
     <>
       <ModeSelect isFocused={isFocused} setNumWords={setNumWords} />
@@ -34,19 +37,25 @@ export default function TypingGame() {
           input={input}
           setInput={setInput}
           numCorrect={numCorrect}
-          totalTyped={totalTyped}
+          setNumCorrect={setNumCorrect}
           numIncorrect={numIncorrect}
+          setNumIncorrect={setNumIncorrect}
+          totalTyped={totalTyped}
           isFocused={isFocused}
+          setFinished={setFinished}
           setIsFocused={setIsFocused}
           numWords={numWords}
         />
       )}
       {finished && (
         <Stats
+          setInput={setInput}
           setFinished={setFinished}
           numCorrect={numCorrect}
+          setNumCorrect={setNumCorrect}
           totalTyped={totalTyped}
           numIncorrect={numIncorrect}
+          setNumIncorrect={setNumIncorrect}
           totalTime={totalTime}
           totalChars={totalChars}
         />

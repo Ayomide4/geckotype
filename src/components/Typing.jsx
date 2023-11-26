@@ -6,12 +6,12 @@ import { useState, useEffect, useRef } from "react";
 export const Typing = ({
   input,
   setInput,
-  numCorrect,
-  totalTyped,
+  setNumCorrect,
   isFocused,
   setIsFocused,
   numWords,
-  numIncorrect,
+  setNumIncorrect,
+  setFinished,
 }) => {
   const [displayPhrase, setDisplayPhrase] = useState([]);
   const [wordCount, setWordCount] = useState(0);
@@ -90,22 +90,17 @@ export const Typing = ({
       lastChar &&
       lastChar !== spanElements[arrayValue.length - 1].innerText
     ) {
-      numIncorrect.current += 1;
-      // spanElements[arrayValue.length - 1].classList.add("caret");
-      // if (spanElements[arrayValue.length - 2] !== undefined) {
-      //   spanElements[arrayValue.length - 2].classList.remove("caret");
-      // }
+      setNumIncorrect((prev) => prev + 1);
     } else if (
+      // count correct
       lastChar &&
       lastChar === spanElements[arrayValue.length - 1].innerText
     ) {
-      // spanElements[arrayValue.length - 1].classList.add("caret");
-      // if (spanElements[arrayValue.length - 2] !== undefined) {
-      //   spanElements[arrayValue.length - 2].classList.remove("caret");
-      // }
-      numCorrect.current += 1;
-      // } else if (lastChar === undefined && spanElements[arrayValue.length - 1]) {
-      //   spanElements[arrayValue.length - 1].classList.remove("caret");
+      if (input.length === spanElements.length - 1) {
+        setFinished(true);
+        setInput("");
+      }
+      setNumCorrect((prev) => prev + 1);
     }
   }, [input]);
 

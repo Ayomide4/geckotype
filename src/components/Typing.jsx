@@ -17,6 +17,7 @@ export const Typing = ({
   const [wordCount, setWordCount] = useState(0);
   const spanElements = document.querySelectorAll("span");
   const wordIndex = useRef(0);
+  const [map, setMap] = useState(new Map());
 
   const quote = displayPhrase.map((char, index) => {
     return <span key={index}>{char}</span>;
@@ -39,8 +40,43 @@ export const Typing = ({
   };
 
   const handleChange = (e) => {
-    const arrayValue = e.target.value.split("");
+    let arrayValue = e.target.value.split("");
+    let lastIndex = arrayValue.length - 1;
+    const lastChar = arrayValue[lastIndex];
     setInput(e.target.value);
+
+    setMap((prevCharMap) => {
+      const newCharMap = new Map(prevCharMap);
+      newCharMap.set(lastIndex, arrayValue[lastIndex]);
+      return newCharMap;
+    });
+
+    console.log("last", lastIndex);
+
+    //FIXME: once page is refreshed first char bugs out
+    if (spanElements[lastIndex] !== undefined) {
+      if (map.has(lastIndex)) {
+      } else if (lastIndex >= 0) {
+        if (lastChar && lastChar !== spanElements[lastIndex].innerText) {
+          setNumIncorrect((prev) => prev + 1);
+        } else if (
+          lastChar &&
+          arrayValue[lastIndex] === spanElements[lastIndex].innerText
+        ) {
+          console.log("correct");
+          setNumCorrect((prev) => prev + 1);
+        }
+      }
+      if (
+        lastChar === spanElements[lastIndex].innerText &&
+        arrayValue.length === spanElements.length - 1
+      ) {
+        setFinished(true);
+        setInput("");
+        arrayValue = [];
+        lastIndex = arrayValue.length - 1;
+      }
+    }
 
     spanElements.forEach((charSpan, index) => {
       const currentChar = arrayValue[index];
@@ -60,25 +96,22 @@ export const Typing = ({
 
   // count words
   useEffect(() => {
+    //TODO: refactor this into handleChange
     const arrayValue = input.split("");
-    const lastChar = arrayValue[arrayValue.length - 1];
+    const lastIndex = arrayValue.length - 1;
+    const lastChar = arrayValue[lastIndex];
     const wordList = displayPhrase.join("").split(" ");
 
     arrayValue.forEach((char, index) => {
-      if (index === arrayValue.length - 1) {
+      if (index === lastIndex) {
         spanElements[index].classList.add("caret");
       } else {
         spanElements[index].classList.remove("caret");
       }
     });
 
-    if (
-      lastChar === " " &&
-      lastChar === spanElements[arrayValue.length - 1].innerText
-    ) {
-      let word = displayPhrase
-        .slice(wordIndex.current, arrayValue.length - 1)
-        .join("");
+    if (lastChar === " " && lastChar === spanElements[lastIndex].innerText) {
+      let word = displayPhrase.slice(wordIndex.current, lastIndex).join("");
       wordIndex.current = arrayValue.length;
       if (wordList[wordCount] === word) {
         setWordCount((prev) => prev + 1);
@@ -88,22 +121,21 @@ export const Typing = ({
     //TODO: use hash table to makde sure count is correct
 
     // count incorrect
-    if (
-      lastChar &&
-      lastChar !== spanElements[arrayValue.length - 1].innerText
-    ) {
-      setNumIncorrect((prev) => prev + 1);
-    } else if (
-      // count correct
-      lastChar &&
-      lastChar === spanElements[arrayValue.length - 1].innerText
-    ) {
-      if (input.length === spanElements.length - 1) {
-        setFinished(true);
-        setInput("");
-      }
-      setNumCorrect((prev) => prev + 1);
-    }
+    // if (lastChar && lastChar !== spanElements[lastIndex].innerText) {
+    //   setNumIncorrect((prev) => prev + 1);
+    // } else if (
+    //   // count correct
+    //   lastChar &&
+    //   lastChar === spanElements[lastIndex].innerText
+    // ) {
+    //   if (input.length === spanElements.length - 1) {
+    //     setFinished(true);
+    //     console.log("finished");
+    //     setInput("");
+    //   }
+    //   console.log("correct");
+    //   setNumCorrect((prev) => prev + 1);
+    // }
   }, [input]);
 
   const focusInput = () => {

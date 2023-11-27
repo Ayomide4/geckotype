@@ -23,6 +23,7 @@ export default function TypingGame() {
   //   setFinished((prev) => !prev);
   //   setInput("");
   // }
+  //
 
   return (
     <>
@@ -58,7 +59,12 @@ export default function TypingGame() {
           totalChars={totalChars}
         />
       )}
-      <Timer spanElements={spanElements} input={input} totalTime={totalTime} />
+      <Timer
+        spanElements={spanElements}
+        input={input}
+        totalTime={totalTime}
+        finished={finished}
+      />
       <IoPersonOutline className="profile-icon" />
     </>
   );

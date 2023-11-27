@@ -18,7 +18,8 @@ export const Stats = ({
     // setInput("");
   };
 
-  let correctWpm = Math.floor(numCorrect / 5 / (totalTime.current / 60));
+  let temp = numCorrect / 5;
+  let correctWpm = Math.floor(temp / (totalTime.current / 60));
   let rawWpm = Math.floor(
     (numCorrect + numIncorrect) / 5 / (totalTime.current / 60),
   );

@@ -24,8 +24,6 @@ export default function TypingGame() {
   //   setInput("");
   // }
 
-  console.log(spanElements.length, totalChars, input.length);
-  console.log("correct", numCorrect, "incorrect", numIncorrect);
   return (
     <>
       <ModeSelect isFocused={isFocused} setNumWords={setNumWords} />

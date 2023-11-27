@@ -85,6 +85,8 @@ export const Typing = ({
       }
     }
 
+    //TODO: use hash table to makde sure count is correct
+
     // count incorrect
     if (
       lastChar &&

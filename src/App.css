@@ -189,6 +189,10 @@ span {
   transition: opacity 0.1s ease-in-out; /* Add a smooth transition on opacity */
 }
 
+.selected {
+  color: #fff;
+}
+
 .mode-select-focused {
   opacity: 0;
   transition: opacity 0.1s ease-in-out; /* Add a smooth transition on opacity */

@@ -8,23 +8,17 @@ import ModeSelect from "./ModeSelect";
 
 export default function TypingGame() {
   const [input, setInput] = useState("");
-  const [numWords, setNumWords] = useState(50);
+  const [numWords, setNumWords] = useState(10);
   const [isFocused, setIsFocused] = useState(false);
   const [numCorrect, setNumCorrect] = useState(0);
   const [numIncorrect, setNumIncorrect] = useState(0);
-  const wpm = useRef(0);
   const [finished, setFinished] = useState(false);
   const totalTyped = useRef(0);
+  let id = useRef(null);
+
   let totalTime = useRef(0);
   const spanElements = document.querySelectorAll("span");
   const totalChars = spanElements.length - 1;
-
-  // if (input.length === spanElements.length - 1 && spanElements.length !== 0) {
-  //   setFinished((prev) => !prev);
-  //   setInput("");
-  // }
-  //
-
   return (
     <>
       <ModeSelect isFocused={isFocused} setNumWords={setNumWords} />
@@ -44,6 +38,7 @@ export default function TypingGame() {
           setFinished={setFinished}
           setIsFocused={setIsFocused}
           numWords={numWords}
+          id={id}
         />
       )}
       {finished && (
@@ -57,6 +52,7 @@ export default function TypingGame() {
           setNumIncorrect={setNumIncorrect}
           totalTime={totalTime}
           totalChars={totalChars}
+          setIsFocused={setIsFocused}
         />
       )}
       <Timer
@@ -64,6 +60,7 @@ export default function TypingGame() {
         input={input}
         totalTime={totalTime}
         finished={finished}
+        id={id}
       />
       <IoPersonOutline className="profile-icon" />
     </>

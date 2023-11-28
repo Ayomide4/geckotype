@@ -1,11 +1,10 @@
 import { useRef } from "react";
-export const Timer = ({ input, spanElements, totalTime, finished }) => {
-  let id = useRef(null);
+export const Timer = ({ input, totalTime, finished, id }) => {
   const getTimerTime = (current) => {
     return Math.floor((new Date() - current) / 1000);
   };
 
-  if (!id.current && input.length === 1) {
+  if (input.length === 1) {
     const currentTime = new Date();
     id.current = setInterval(() => {
       console.log(getTimerTime(currentTime));
@@ -14,7 +13,6 @@ export const Timer = ({ input, spanElements, totalTime, finished }) => {
   }
 
   if (finished) {
-    console.log("clearing interval");
     clearInterval(id.current);
     id.current = null;
   }

@@ -9,12 +9,13 @@ export const Stats = ({
   totalTime,
   setNumCorrect,
   setNumIncorrect,
+  setIsFocused,
 }) => {
-  //FIXME: accuracy is not correct
   const handleRestart = () => {
     setFinished(false);
     setNumCorrect(0);
     setNumIncorrect(0);
+    setIsFocused(false);
     // setInput("");
   };
 

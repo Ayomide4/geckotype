@@ -1,10 +1,27 @@
+import React, { useState } from "react";
 import { CiClock1 } from "react-icons/ci";
 import { FaFont, FaQuoteLeft, FaAt, FaHashtag } from "react-icons/fa";
 export default function ModeSelect({ isFocused, setNumWords }) {
+  const [selected, setSelected] = useState(false);
+
+  //FIXME: fix css highlight for selected numWords
   const selectNumWords = (e) => {
     const numWords = e.target.innerText;
     setNumWords(numWords);
   };
+
+  const numbers = [10, 25, 50];
+  const numWords = numbers.map((num, index) => {
+    return (
+      <div
+        className={selected ? "mode-item selected" : "mode-item"}
+        key={index}
+        onClick={(e) => selectNumWords(e)}
+      >
+        <p>{num}</p>
+      </div>
+    );
+  });
 
   return (
     <div className={isFocused ? "mode-select-focused" : "mode-select"}>
@@ -34,17 +51,7 @@ export default function ModeSelect({ isFocused, setNumWords }) {
           <p>Quotes</p>
         </div>
         <div className="spacer"></div>
-        <div className="mode-options ">
-          <div className="mode-item" onClick={(e) => selectNumWords(e)}>
-            <p>10</p>
-          </div>
-          <div className="mode-item" onClick={(e) => selectNumWords(e)}>
-            <p>25</p>
-          </div>
-          <div className="mode-item" onClick={(e) => selectNumWords(e)}>
-            <p>50</p>
-          </div>
-        </div>
+        <div className="mode-options ">{numWords}</div>
       </div>
     </div>
   );

@@ -12,16 +12,13 @@ export const Typing = ({
   numWords,
   setNumIncorrect,
   setFinished,
+  id,
 }) => {
   const [displayPhrase, setDisplayPhrase] = useState([]);
   const [wordCount, setWordCount] = useState(0);
   const spanElements = document.querySelectorAll("span");
   const wordIndex = useRef(0);
   const [map, setMap] = useState(new Map());
-
-  const quote = displayPhrase.map((char, index) => {
-    return <span key={index}>{char}</span>;
-  });
 
   const generatePhrase = () => {
     let arr = [];
@@ -39,57 +36,71 @@ export const Typing = ({
     setDisplayPhrase(arr);
   };
 
+  const quote = displayPhrase.map((char, index) => {
+    return <span key={index}>{char}</span>;
+  });
+
+  const restart = () => {
+    setInput("");
+    setWordCount(0);
+    setFinished(false);
+    setIsFocused(false);
+    clearInterval(id.current);
+    spanElements.forEach((span) => {
+      span.classList.remove("correct");
+      span.classList.remove("incorrect");
+      span.classList.remove("caret");
+    });
+  };
+
   const handleChange = (e) => {
     let arrayValue = e.target.value.split("");
     let lastIndex = arrayValue.length - 1;
     const lastChar = arrayValue[lastIndex];
     setInput(e.target.value);
 
+    //update map
     setMap((prevCharMap) => {
       const newCharMap = new Map(prevCharMap);
       newCharMap.set(lastIndex, arrayValue[lastIndex]);
       return newCharMap;
     });
 
-    console.log("last", lastIndex);
-
     //FIXME: once page is refreshed first char bugs out
-    if (spanElements[lastIndex] !== undefined) {
-      if (map.has(lastIndex)) {
-      } else if (lastIndex >= 0) {
-        if (lastChar && lastChar !== spanElements[lastIndex].innerText) {
-          setNumIncorrect((prev) => prev + 1);
-        } else if (
-          lastChar &&
-          arrayValue[lastIndex] === spanElements[lastIndex].innerText
-        ) {
-          console.log("correct");
-          setNumCorrect((prev) => prev + 1);
-        }
-      }
-      if (
-        lastChar === spanElements[lastIndex].innerText &&
-        arrayValue.length === spanElements.length - 1
+    //is it because phrase is regenerated so spanElements is different? therefore span elemnts shoudl be a state?
+    // if (spanElements[lastIndex] !== undefined) {
+    if (map.has(lastIndex)) {
+    } else if (lastIndex >= 0) {
+      // console.log(displayPhrase);
+      if (lastChar && lastChar !== displayPhrase[lastIndex]) {
+        setNumIncorrect((prev) => prev + 1);
+      } else if (
+        lastChar &&
+        arrayValue[lastIndex] === displayPhrase[lastIndex]
       ) {
-        setFinished(true);
-        setInput("");
-        arrayValue = [];
-        lastIndex = arrayValue.length - 1;
+        setNumCorrect((prev) => prev + 1);
       }
     }
+    if (
+      lastChar === displayPhrase[lastIndex] &&
+      arrayValue.length === spanElements.length - 1
+    ) {
+      setFinished(true);
+      setInput("");
+    }
 
-    spanElements.forEach((charSpan, index) => {
+    displayPhrase.forEach((char, index) => {
       const currentChar = arrayValue[index];
 
       if (currentChar == null) {
-        charSpan.classList.remove("correct");
-        charSpan.classList.remove("incorrect");
-      } else if (currentChar === charSpan.innerText) {
-        charSpan.classList.add("correct");
-        charSpan.classList.remove("incorrect");
+        spanElements[index].classList.remove("correct");
+        spanElements[index].classList.remove("incorrect");
+      } else if (currentChar === char && spanElements[index] !== undefined) {
+        spanElements[index].classList.add("correct");
+        spanElements[index].classList.remove("incorrect");
       } else {
-        charSpan.classList.add("incorrect");
-        charSpan.classList.remove("correct");
+        spanElements[index].classList.add("incorrect");
+        spanElements[index].classList.remove("correct");
       }
     });
   };
@@ -117,25 +128,6 @@ export const Typing = ({
         setWordCount((prev) => prev + 1);
       }
     }
-
-    //TODO: use hash table to makde sure count is correct
-
-    // count incorrect
-    // if (lastChar && lastChar !== spanElements[lastIndex].innerText) {
-    //   setNumIncorrect((prev) => prev + 1);
-    // } else if (
-    //   // count correct
-    //   lastChar &&
-    //   lastChar === spanElements[lastIndex].innerText
-    // ) {
-    //   if (input.length === spanElements.length - 1) {
-    //     setFinished(true);
-    //     console.log("finished");
-    //     setInput("");
-    //   }
-    //   console.log("correct");
-    //   setNumCorrect((prev) => prev + 1);
-    // }
   }, [input]);
 
   const focusInput = () => {
@@ -155,9 +147,8 @@ export const Typing = ({
   }
 
   document.addEventListener("keydown", (e) => {
-    //FIXME: this is a hacky way to refresh the page
     if (e.key === "Enter" && e.shiftKey) {
-      window.location.reload();
+      restart();
     }
 
     if (e.key === "Backspace") {
@@ -198,11 +189,7 @@ export const Typing = ({
           <div className="quote">{quote}</div>
         </div>
       </div>
-      <FaRedoAlt
-        className="refresh-icon"
-        size={20}
-        onClick={() => window.location.reload()}
-      />
+      <FaRedoAlt className="refresh-icon" size={20} onClick={restart} />
     </div>
   );
 };

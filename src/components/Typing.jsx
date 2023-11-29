@@ -49,7 +49,9 @@ export const Typing = ({
     setWordCount(0);
     setFinished(false);
     setIsFocused(false);
+    wordIndex.current = 0;
     clearInterval(id.current);
+    generatePhrase();
     id.current = null;
     console.log("id in restart", id.current);
     spanElements.forEach((span) => {
@@ -129,6 +131,7 @@ export const Typing = ({
 
     if (lastChar === " " && lastChar === spanElements[lastIndex].innerText) {
       let word = displayPhrase.slice(wordIndex.current, lastIndex).join("");
+      console.log("index", wordIndex.current, lastIndex, word);
       wordIndex.current = arrayValue.length;
       if (wordList[wordCount] === word) {
         setWordCount((prev) => prev + 1);

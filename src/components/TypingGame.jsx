@@ -4,6 +4,7 @@ import { Typing } from "./Typing";
 import { IoPersonOutline } from "react-icons/io5";
 import { Timer } from "./Timer";
 import { Stats } from "./Stats";
+import { Shortcuts } from "./Shortcuts";
 import ModeSelect from "./ModeSelect";
 
 export default function TypingGame() {
@@ -22,6 +23,7 @@ export default function TypingGame() {
   return (
     <>
       <ModeSelect isFocused={isFocused} setNumWords={setNumWords} />
+      <Shortcuts isFocused={isFocused} />
       <div className="title">
         <h1>geckotype</h1>
       </div>

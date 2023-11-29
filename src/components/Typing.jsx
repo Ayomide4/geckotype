@@ -16,7 +16,7 @@ export const Typing = ({
 }) => {
   const [displayPhrase, setDisplayPhrase] = useState([]);
   const [wordCount, setWordCount] = useState(0);
-  const spanElements = document.querySelectorAll("span");
+  const spanElements = document.querySelectorAll("span.char");
   const wordIndex = useRef(0);
   const [map, setMap] = useState(new Map());
 
@@ -37,7 +37,11 @@ export const Typing = ({
   };
 
   const quote = displayPhrase.map((char, index) => {
-    return <span key={index}>{char}</span>;
+    return (
+      <span key={index} className="char">
+        {char}
+      </span>
+    );
   });
 
   const restart = () => {
@@ -46,6 +50,8 @@ export const Typing = ({
     setFinished(false);
     setIsFocused(false);
     clearInterval(id.current);
+    id.current = null;
+    console.log("id in restart", id.current);
     spanElements.forEach((span) => {
       span.classList.remove("correct");
       span.classList.remove("incorrect");

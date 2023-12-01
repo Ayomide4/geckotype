@@ -112,12 +112,33 @@ span {
 }
 
 .stats-container {
+  display: flex;
   position: absolute;
+  justify-content: space-between;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  width: 50%;
 }
 
+.stat-line > p {
+  margin: 0;
+  padding: 0;
+  font-size: 1.25rem;
+}
+
+.result {
+  margin: 0;
+  padding: 0;
+  font-size: 2rem;
+}
+
+.arrow {
+  position: absolute;
+  top: 60%;
+  left: 25%;
+  width: 5rem;
+}
 .caret {
   position: relative;
   margin: 0;

@@ -53,7 +53,6 @@ export const Typing = ({
     clearInterval(id.current);
     generatePhrase();
     id.current = null;
-    console.log("id in restart", id.current);
     spanElements.forEach((span) => {
       span.classList.remove("correct");
       span.classList.remove("incorrect");
@@ -79,7 +78,6 @@ export const Typing = ({
     // if (spanElements[lastIndex] !== undefined) {
     if (map.has(lastIndex)) {
     } else if (lastIndex >= 0) {
-      // console.log(displayPhrase);
       if (lastChar && lastChar !== displayPhrase[lastIndex]) {
         setNumIncorrect((prev) => prev + 1);
       } else if (
@@ -115,7 +113,6 @@ export const Typing = ({
 
   // count words
   useEffect(() => {
-    //TODO: refactor this into handleChange
     const arrayValue = input.split("");
     const lastIndex = arrayValue.length - 1;
     const lastChar = arrayValue[lastIndex];
@@ -131,7 +128,6 @@ export const Typing = ({
 
     if (lastChar === " " && lastChar === spanElements[lastIndex].innerText) {
       let word = displayPhrase.slice(wordIndex.current, lastIndex).join("");
-      console.log("index", wordIndex.current, lastIndex, word);
       wordIndex.current = arrayValue.length;
       if (wordList[wordCount] === word) {
         setWordCount((prev) => prev + 1);

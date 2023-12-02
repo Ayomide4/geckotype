@@ -137,7 +137,6 @@ span {
   position: absolute;
   top: 60%;
   left: 25%;
-  width: 5rem;
 }
 .caret {
   position: relative;
@@ -224,12 +223,14 @@ span {
   align-items: center;
   margin: 0 0.5rem;
   cursor: pointer;
+  user-select: none;
 }
 
 .mode-options {
   display: flex;
   align-items: center;
   margin: 0 0.5rem;
+  user-select: none;
 }
 
 .mode-item > p {

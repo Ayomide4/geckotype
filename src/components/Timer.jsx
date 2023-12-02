@@ -7,10 +7,8 @@ export const Timer = ({ input, totalTime, finished, id }) => {
   if (!id.current && input.length === 1) {
     const currentTime = new Date();
     id.current = setInterval(() => {
-      console.log(getTimerTime(currentTime));
       totalTime.current = getTimerTime(currentTime);
     }, 1000);
-    console.log("id in timer", id.current);
   }
 
   if (finished && id.current) {

@@ -72,16 +72,32 @@ h1 {
   -khtml-user-select: none;
   -webkit-user-select: none;
   -o-user-select: none;
+  outline: none;
   pointer-events: none;
+  text-decoration: none;
 }
 
 .hidden {
   visibility: hidden;
+  text-decoration: none;
+  outline: none;
+  user-select: none;
+  outline: none;
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  -o-user-select: none;
 }
 
 input:focus {
+  text-decoration: none;
   outline: none;
   user-select: none;
+  outline: none;
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  -o-user-select: none;
 }
 
 .word-count {

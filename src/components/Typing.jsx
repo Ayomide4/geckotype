@@ -186,6 +186,8 @@ export const Typing = ({
           onClick={focusInput}
         >
           <input
+            type="text"
+            spellcheck="false"
             className={`${isFocused ? "text-box " : "hidden "}`}
             value={input}
             onChange={(e) => handleChange(e)}

@@ -1,4 +1,17 @@
+import React from "react";
 import { IoIosArrowForward } from "react-icons/io";
+
+interface StatsProps {
+  setInput: React.Dispatch<React.SetStateAction<string>>;
+  setFinished: React.Dispatch<React.SetStateAction<boolean>>;
+  numCorrect: number;
+  numIncorrect: number;
+  totalChars: number;
+  totalTime: React.MutableRefObject<number>;
+  setNumCorrect: React.Dispatch<React.SetStateAction<number>>;
+  setNumIncorrect: React.Dispatch<React.SetStateAction<number>>;
+  setIsFocused: React.Dispatch<React.SetStateAction<boolean>>;
+}
 
 export const Stats = ({
   setInput,
